@@ -1,8 +1,0 @@
-FROM postgres:latest
-COPY cron-backup-db.sh /opt/cron-backup-db.sh
-RUN apt-get update \
-&& apt-get install vim -y \
-&& export EDITOR=/usr/bin/vim \
-&& chmod +x /opt/cron-backup-db.sh \
-&& cd /opt \
-&& mkdir db_backup \

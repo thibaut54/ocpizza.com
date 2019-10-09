@@ -1,0 +1,10 @@
+FROM postgres:latest
+COPY db/create_db_ocpizza.sql /docker-entrypoint-initdb.d/init.sql
+COPY db/insert_data_ocpizza.sql /opt/insert_data_ocpizza.sql
+COPY sh/backup-db.sh /opt/backup-db.sh
+RUN apt-get update \
+&& apt-get install vim -y \
+&& export EDITOR=/usr/bin/vim \
+&& chmod +x /opt/backup-db.sh \
+&& cd /opt \
+&& mkdir db_backup \

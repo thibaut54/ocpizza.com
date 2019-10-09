@@ -1,45 +1,64 @@
 version: '3.7'
 
 services:
-    db-wtc:
+    db-ocpizza:
         build:
             context: .
-            dockerfile: Dockerfile-db
-        container_name: cont-db-wtc
+            dockerfile: db/Dockerfile-db
+        container_name: cont-ocpizza-db
         restart: unless-stopped
         ports:
             - 5432:5432
         expose:
             - 5432
         environment:
-            POSTGRES_USER: admin_wtc
+            POSTGRES_USER: admin_ocp
             POSTGRES_PASSWORD: 123
-            POSTGRES_DB: db_wtc
+            POSTGRES_DB: db_ocpizza
         volumes:
-          - db_data:/var/lib/postgres/data
+            - db_data:/var/lib/postgres/data
         networks:
-            - wtc-network
+            - ocp-network
 
-    wtc:
+    back-ocpizza:
         depends_on:
-            - db-wtc
+            - db-ocpizza
         build:
             context: .
-            dockerfile: Dockerfile
-        container_name: cont-wtc
+            dockerfile: build/back/Dockerfile-back
+        container_name: cont-ocpizza-back
         ports:
             - 8080:8080
         expose:
             - 8080
         environment:
-            SPRING_DATASOURCE_USERNAME: admin_wtc
+            SPRING_DATASOURCE_USERNAME: admin_ocp
             SPRING_DATASOURCE_PASSWORD: 123
-            SPRING_DATASOURCE_URL: jdbc:postgresql://db-wtc:5432/db_wtc
+            SPRING_DATASOURCE_URL: jdbc:postgresql://db-ocpizza:5432/db_ocpizza
         networks:
-            - wtc-network
+            - ocp-network
+
+    front-ocpizza:
+        build:
+            context: .
+            dockerfile: build/front/Dockerfile-front
+        container_name: cont-ocpizza-front
+        volumes:
+            - 'front:/app'
+            - '/app/node_modules'
+        ports:
+            - 4201:4200
+        networks:
+            - ocp-network
 
 networks:
-    wtc-network:
+    ocp-network:
 
 volumes:
     db_data:
+        driver: local
+        driver_opts:
+          type: 'none'
+          o: 'bind'
+          device: '/opt/ct/docker/volumes/postgres'
+    front:

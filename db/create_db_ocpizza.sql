@@ -1,7 +1,7 @@
 
-CREATE SCHEMA ocpizza;
+CREATE SCHEMA IF NOT EXISTS ocpizza;
 
-CREATE SEQUENCE ocpizza.formule_id_seq;
+CREATE SEQUENCE IF NOT EXISTS ocpizza.formule_id_seq;
 
 CREATE TABLE IF NOT EXISTS ocpizza.Formule (
                 id INTEGER NOT NULL DEFAULT nextval('ocpizza.formule_id_seq'),
@@ -13,11 +13,11 @@ CREATE TABLE IF NOT EXISTS ocpizza.Formule (
 
 ALTER SEQUENCE IF EXISTS ocpizza.formule_id_seq OWNED BY ocpizza.Formule.id;
 
-CREATE UNIQUE INDEX formule_idx
+CREATE UNIQUE INDEX IF NOT EXISTS formule_idx
  ON ocpizza.Formule
  ( nom );
 
-CREATE SEQUENCE ocpizza.categorie_nom_seq;
+CREATE SEQUENCE IF NOT EXISTS ocpizza.categorie_nom_seq;
 
 CREATE TABLE IF NOT EXISTS ocpizza.Categorie (
                 id INTEGER NOT NULL DEFAULT nextval('ocpizza.categorie_nom_seq'),
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS ocpizza.CategorieParFormule (
 );
 
 
-CREATE SEQUENCE ocpizza.ingredient_id_seq;
+CREATE SEQUENCE IF NOT EXISTS ocpizza.ingredient_id_seq;
 
 CREATE TABLE IF NOT EXISTS ocpizza.Ingredient (
                 id INTEGER NOT NULL DEFAULT nextval('ocpizza.ingredient_id_seq'),
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS ocpizza.Ingredient (
 
 ALTER SEQUENCE IF EXISTS ocpizza.ingredient_id_seq OWNED BY ocpizza.Ingredient.id;
 
-CREATE SEQUENCE ocpizza.produit_reference_seq;
+CREATE SEQUENCE IF NOT EXISTS ocpizza.produit_reference_seq;
 
 CREATE TABLE IF NOT EXISTS ocpizza.Produit (
                 id INTEGER NOT NULL DEFAULT nextval('ocpizza.produit_reference_seq'),
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS ocpizza.Produit (
 
 ALTER SEQUENCE IF EXISTS ocpizza.produit_reference_seq OWNED BY ocpizza.Produit.id;
 
-CREATE UNIQUE INDEX produit_idx
+CREATE UNIQUE INDEX IF NOT EXISTS produit_idx
  ON ocpizza.Produit
  ( nom );
 
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS ocpizza.IngredientsParProduit (
 );
 
 
-CREATE SEQUENCE ocpizza.adresse_adresseid_seq;
+CREATE SEQUENCE IF NOT EXISTS ocpizza.adresse_adresseid_seq;
 
 CREATE TABLE IF NOT EXISTS ocpizza.Adresse (
                 id INTEGER NOT NULL DEFAULT nextval('ocpizza.adresse_adresseid_seq'),
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS ocpizza.Adresse (
 
 ALTER SEQUENCE IF EXISTS ocpizza.adresse_adresseid_seq OWNED BY ocpizza.Adresse.id;
 
-CREATE SEQUENCE ocpizza.restaurant_nom_seq;
+CREATE SEQUENCE IF NOT EXISTS ocpizza.restaurant_nom_seq;
 
 CREATE TABLE IF NOT EXISTS ocpizza.Restaurant (
                 id INTEGER NOT NULL DEFAULT nextval('ocpizza.restaurant_nom_seq'),
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS ocpizza.RestaurantProduitDispo (
                 stock INTEGER,
                 CONSTRAINT restaurantproduitdispo_pk PRIMARY KEY (produitId, restaurantId)
 );
-COMMENT ON COLUMN ocpizza.RestaurantProduitDispo.stock IS 'la valeur NULL est autorisée pour les pizzas, dont on ne peut évaluer le stock';
+COMMENT ON COLUMN ocpizza.RestaurantProduitDispo.stock IS 'la valeur NULL est autorisï¿½e pour les pizzas, dont on ne peut ï¿½valuer le stock';
 
 
 CREATE TABLE IF NOT EXISTS ocpizza.IngredientParRestaurant (
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS ocpizza.IngredientParRestaurant (
 );
 
 
-CREATE SEQUENCE ocpizza.compte_id_seq;
+CREATE SEQUENCE IF NOT EXISTS ocpizza.compte_id_seq;
 
 CREATE TABLE IF NOT EXISTS ocpizza.Compte (
                 id INTEGER NOT NULL DEFAULT nextval('ocpizza.compte_id_seq'),
@@ -171,11 +171,11 @@ CREATE TABLE IF NOT EXISTS ocpizza.CompteCollaborateur (
 COMMENT ON COLUMN ocpizza.CompteCollaborateur.email IS 'on autorise la valeur null car les CDD, par exemple, n''auront pas besoin de donner leur email';
 
 
-CREATE UNIQUE INDEX comptesalarie_idx
+CREATE UNIQUE INDEX IF NOT EXISTS comptesalarie_idx
  ON ocpizza.CompteCollaborateur
  ( numeroSecu );
 
-CREATE UNIQUE INDEX comptesalarie_idx1
+CREATE UNIQUE INDEX IF NOT EXISTS comptesalarie_idx1
  ON ocpizza.CompteCollaborateur
  ( email );
 
@@ -190,11 +190,11 @@ CREATE TABLE IF NOT EXISTS ocpizza.CompteClient (
 );
 
 
-CREATE UNIQUE INDEX compteclient_idx
+CREATE UNIQUE INDEX IF NOT EXISTS compteclient_idx
  ON ocpizza.CompteClient
  ( email );
 
-CREATE SEQUENCE ocpizza.commande_numero_seq;
+CREATE SEQUENCE IF NOT EXISTS ocpizza.commande_numero_seq;
 
 CREATE TABLE IF NOT EXISTS ocpizza.Commande (
                 numero INTEGER NOT NULL DEFAULT nextval('ocpizza.commande_numero_seq'),
@@ -216,7 +216,7 @@ CREATE TABLE IF NOT EXISTS ocpizza.Commande (
 
 ALTER SEQUENCE IF EXISTS ocpizza.commande_numero_seq OWNED BY ocpizza.Commande.numero;
 
-CREATE SEQUENCE ocpizza.lignecommande_id_seq;
+CREATE SEQUENCE IF NOT EXISTS ocpizza.lignecommande_id_seq;
 
 CREATE TABLE IF NOT EXISTS ocpizza.LigneCommande (
                 id INTEGER NOT NULL DEFAULT nextval('ocpizza.lignecommande_id_seq'),
@@ -238,7 +238,7 @@ CREATE TABLE IF NOT EXISTS ocpizza.Supplement (
 );
 
 
-CREATE SEQUENCE ocpizza.facture_numerofacture_seq;
+CREATE SEQUENCE IF NOT EXISTS ocpizza.facture_numerofacture_seq;
 
 CREATE TABLE IF NOT EXISTS ocpizza.Facture (
                 numeroFacture INTEGER NOT NULL DEFAULT nextval('ocpizza.facture_numerofacture_seq'),
