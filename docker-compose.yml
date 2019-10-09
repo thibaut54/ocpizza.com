@@ -47,7 +47,7 @@ services:
             - 'front:/app'
             - '/app/node_modules'
         ports:
-            - 4201:4200
+            - 4200:4200
         networks:
             - ocp-network
 
@@ -60,5 +60,5 @@ volumes:
         driver_opts:
           type: 'none'
           o: 'bind'
-          device: '/opt/ct/docker/volumes/postgres'
+          device: '/opt/ocpizza/docker/volumes/postgres'
     front:
